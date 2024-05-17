@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-
     public class Schedule {
     private Long id;
     private String title;
@@ -17,15 +16,19 @@ import lombok.Setter;
     private String password;
     private String date;
 
-    public Schedule(String title, String contents, String manager, String password, String date) {
-        this.title = title;
-        this.contents = contents;
-        this.manager = manager;
-        this.password = password;
-        this.date = date;
+    public Schedule(ScheduleRequestDto requestDto) {
+        this.id = requestDto.getId();
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+        this.manager = requestDto.getManager();
+        this.password = requestDto.getPassword();
+        this.date = requestDto.getDate();
     }
 
-
-    public Schedule(ScheduleRequestDto requestDto) {
+    // 제목, 내용, 담담자만 수정됨
+    public void update(ScheduleRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+        this.manager = requestDto.getManager();
     }
 }
