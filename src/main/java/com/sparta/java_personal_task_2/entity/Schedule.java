@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-    public class Schedule {
+    public class Schedule{
     private Long id;
     private String title;
     private String contents;
@@ -31,4 +31,5 @@ import lombok.Setter;
         this.contents = requestDto.getContents();
         this.manager = requestDto.getManager();
     }
+
 }

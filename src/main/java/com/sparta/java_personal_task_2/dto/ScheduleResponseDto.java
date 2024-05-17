@@ -25,4 +25,6 @@ public class ScheduleResponseDto {
         this.manager = schedule.getManager();
         this.date = schedule.getDate();
     }
+
+
 }
