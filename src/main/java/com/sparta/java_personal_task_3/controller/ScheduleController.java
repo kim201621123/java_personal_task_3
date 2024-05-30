@@ -3,28 +3,42 @@ package com.sparta.java_personal_task_3.controller;
 import com.sparta.java_personal_task_3.dto.ScheduleRequestDto;
 import com.sparta.java_personal_task_3.dto.ScheduleResponseDto;
 import com.sparta.java_personal_task_3.entity.Schedule;
+import com.sparta.java_personal_task_3.repository.CommentRepository;
+import com.sparta.java_personal_task_3.repository.ScheduleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
-@RequestMapping("/api")
+@Transactional
+@RequestMapping("/api/schedule")
 public class ScheduleController {
+    @Autowired
+    CommentRepository commentRepository;
+    @Autowired
+    ScheduleRepository scheduleRepository;
 
-    Long scheduleId = (long) 0;
+
     private final Map<Long, Schedule> scheduleList = new HashMap<>();
 
     // 일정 DTO 생성
     @PostMapping("/create")
     public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto requestDto) {
 
-        requestDto.setId(scheduleId++);
+        //System.out.println(findMaxIdOfScheduleTable() +" 찾아라 비밀의 열쇠");
+        Long maxID = findMaxIdOfScheduleTable();
+
+        requestDto.setId(maxID++);
         Schedule schedule = new Schedule(requestDto);
+
         // RequestDto > Entity
-        Long maxID = scheduleList.size() > 0 ? Collections.max(scheduleList.keySet()) + 1 : 1;
         schedule.setId(maxID);
 
         scheduleList.put(schedule.getId(), schedule);
+
+        scheduleRepository.save(schedule);
 
         // Entity > ResponseDto 변환
         ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(schedule);
@@ -39,6 +53,7 @@ public class ScheduleController {
                 .map(ScheduleResponseDto::new).toList();
 
         responseList = responseList.stream().sorted(Comparator.comparing(ScheduleResponseDto ::getDate).reversed()).toList();
+
         return responseList;
     }
 
@@ -57,6 +72,7 @@ public class ScheduleController {
             }
         }
         return schedule;
+
     }
 
 
@@ -109,21 +125,10 @@ public class ScheduleController {
         }
         throw new IllegalArgumentException("다시 시도해 주세요");
 
+    }
 
-        //    ScheduleRequestDto requestDto;
-//    for (Schedule scheduleFind : scheduleList.values().stream().toList()) {
-//        if (scheduleFind.getTitle().equals(title)) {
-//            requestDto = new ScheduleRequestDto(scheduleFind);
-//            if (password.equals(requestDto.getPassword())) {
-//                Schedule schedule = scheduleList.get(requestDto.getId());
-//                scheduleList.remove(schedule.getId());
-//                return schedule;
-//            } else {
-//                throw new IllegalArgumentException("비밀번호가 틀립니다.");
-//            }
-//        }
-//    }
-//    throw new IllegalArgumentException("삭제하려는 schedule은 존재하지 않습니다.");
+    public Long findMaxIdOfScheduleTable(){
+        return scheduleRepository.findMaxId();
     }
 
 }

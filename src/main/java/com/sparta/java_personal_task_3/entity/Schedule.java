@@ -41,7 +41,8 @@ public class Schedule{
         this.manager = requestDto.getManager();
     }
 
-    @OneToMany(mappedBy = "schedule")
-    private List<Writing> scheduleList = new ArrayList<>();
+//    @OneToMany
+//    @JoinColumn(name = "schedule_Id") // comment 테이블에 schedule_id 컬럼
+//    private List<Comment> commentList = new ArrayList<>();
 
 }
