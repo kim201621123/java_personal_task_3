@@ -1,10 +1,10 @@
-package com.sparta.java_personal_task_2;
+package com.sparta.java_personal_task_3;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class JavaPersonalTask2ApplicationTests {
+class JavaPersonalTask3ApplicationTests {
 
     @Test
     void contextLoads() {

@@ -1,13 +1,10 @@
-package com.sparta.java_personal_task_2.dto;
+package com.sparta.java_personal_task_3.dto;
 
-import com.sparta.java_personal_task_2.entity.Schedule;
+import com.sparta.java_personal_task_3.entity.Schedule;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Setter
 @Getter
-public class ScheduleRequestDto {
+public class ScheduleResponseDto {
     private Long id;
     private String title;
     private String contents;
@@ -15,15 +12,18 @@ public class ScheduleRequestDto {
     private String password;
     private String date;
 
-    public ScheduleRequestDto(){
+    public ScheduleResponseDto(){
 
     }
 
-    public ScheduleRequestDto(Schedule schedule){
+    // password는 조회되지 않으므로 get메서드가 없음
+    public ScheduleResponseDto(Schedule schedule) {
         this.id = schedule.getId();
         this.title = schedule.getTitle();
         this.contents = schedule.getContents();
         this.manager = schedule.getManager();
         this.date = schedule.getDate();
     }
+
+
 }

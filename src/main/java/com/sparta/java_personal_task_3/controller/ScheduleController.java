@@ -1,8 +1,8 @@
-package com.sparta.java_personal_task_2.controller;
+package com.sparta.java_personal_task_3.controller;
 
-import com.sparta.java_personal_task_2.dto.ScheduleRequestDto;
-import com.sparta.java_personal_task_2.dto.ScheduleResponseDto;
-import com.sparta.java_personal_task_2.entity.Schedule;
+import com.sparta.java_personal_task_3.dto.ScheduleRequestDto;
+import com.sparta.java_personal_task_3.dto.ScheduleResponseDto;
+import com.sparta.java_personal_task_3.entity.Schedule;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;

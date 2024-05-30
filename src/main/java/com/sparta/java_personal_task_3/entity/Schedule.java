@@ -1,15 +1,24 @@
-package com.sparta.java_personal_task_2.entity;
+package com.sparta.java_personal_task_3.entity;
 
-import com.sparta.java_personal_task_2.dto.ScheduleRequestDto;
+import com.sparta.java_personal_task_3.dto.ScheduleRequestDto;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
-    public class Schedule{
+@Entity
+@Table(name = "schedule")
+public class Schedule{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String contents;
     private String manager;
@@ -31,5 +40,8 @@ import lombok.Setter;
         this.contents = requestDto.getContents();
         this.manager = requestDto.getManager();
     }
+
+    @OneToMany(mappedBy = "schedule")
+    private List<Writing> scheduleList = new ArrayList<>();
 
 }
