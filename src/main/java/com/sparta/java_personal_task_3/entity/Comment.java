@@ -23,7 +23,7 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private String date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) //연관되는 값이 전부 조회되는거 막기
     @JoinColumn(name = "scheduleId")
     private Schedule schedule;
 

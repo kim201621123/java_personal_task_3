@@ -61,13 +61,18 @@ public class CommentController {
 
 
     @PutMapping("/update")
-    public Comment updateComment(@RequestParam Long scheduleId, @RequestParam Long commentId,
+    public ResponseEntity<String> updateComment(@RequestParam Long scheduleId, @RequestParam Long commentId,
                                    @RequestBody ScheduleRequestDto requestDto) {
 
         Comment comment = commentRepository.findById(commentId).orElseThrow(NullPointerException::new);
-        comment.update(requestDto);
 
-        return comment;
+
+        if (commentRepository.existsById(commentId)) {
+            comment.update(requestDto);
+            return new ResponseEntity<>("성공적으로 수정했습니다. (" + comment.getContents()+")", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Comment를 찾지 못해 수정하지 못했습니다.", HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/delete")
