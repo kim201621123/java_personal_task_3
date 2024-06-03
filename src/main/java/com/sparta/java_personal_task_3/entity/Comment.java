@@ -12,7 +12,7 @@ import org.springframework.data.annotation.CreatedDate;
 @Getter
 @Setter
 @Table(name = "comment")
-public class Comment {
+public class Comment extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

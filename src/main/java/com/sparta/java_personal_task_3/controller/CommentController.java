@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import service.CommentService;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -63,28 +64,15 @@ public class CommentController {
     @PutMapping("/update")
     public ResponseEntity<String> updateComment(@RequestParam Long scheduleId, @RequestParam Long commentId,
                                    @RequestBody ScheduleRequestDto requestDto) {
+        CommentService commentService = new CommentService();
+        return commentService.updateComment(commentId, requestDto);
 
-        Comment comment = commentRepository.findById(commentId).orElseThrow(NullPointerException::new);
-
-
-        if (commentRepository.existsById(commentId)) {
-            comment.update(requestDto);
-            return new ResponseEntity<>("성공적으로 수정했습니다. (" + comment.getContents()+")", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Comment를 찾지 못해 수정하지 못했습니다.", HttpStatus.NOT_FOUND);
-        }
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteComment(@RequestParam Long scheduleId, @RequestParam Long commentId) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(NullPointerException::new);
-
-        if (commentRepository.existsById(commentId)) {
-            commentRepository.deleteById(commentId);
-            return new ResponseEntity<>("성공적으로 삭제했습니다.", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Comment를 찾지 못해 삭제하지 못했습니다.", HttpStatus.NOT_FOUND);
-        }
+        CommentService commentService = new CommentService();
+        return commentService.deleteComment(commentId);
     }
 
 
