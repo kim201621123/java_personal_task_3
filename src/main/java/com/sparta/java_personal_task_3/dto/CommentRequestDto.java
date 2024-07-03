@@ -6,21 +6,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @NoArgsConstructor
 public class CommentRequestDto {
-    private Long id;
 
     private String contents;
-    private String userId;
-//    private Long scheduleId;
-    private String date;
+    private Long userId;
+    private Long scheduleId;
 
     public CommentRequestDto(Comment comment){
-        this.id = comment.getId();
         this.contents = comment.getContents();
-        this.userId = comment.getUserId();
-//        this.scheduleId = comment.getScheduleId();
-        this.date = comment.getDate();
+        this.userId = comment.getUser().getUserId();
+        this.scheduleId = comment.getSchedule().getId();
     }
 }

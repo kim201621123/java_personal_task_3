@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    @Query(value = "SELECT MAX(Comment .id) FROM Comment", nativeQuery = true)
-    Long findMaxId();
 }

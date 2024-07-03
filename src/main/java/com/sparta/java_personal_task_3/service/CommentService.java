@@ -1,4 +1,4 @@
-package service;
+package com.sparta.java_personal_task_3.service;
 
 import com.sparta.java_personal_task_3.controller.CommentController;
 import com.sparta.java_personal_task_3.dto.CommentRequestDto;
@@ -6,8 +6,10 @@ import com.sparta.java_personal_task_3.dto.CommentResponseDto;
 import com.sparta.java_personal_task_3.dto.ScheduleRequestDto;
 import com.sparta.java_personal_task_3.entity.Comment;
 import com.sparta.java_personal_task_3.entity.Schedule;
+import com.sparta.java_personal_task_3.entity.User;
 import com.sparta.java_personal_task_3.repository.CommentRepository;
 import com.sparta.java_personal_task_3.repository.ScheduleRepository;
+import com.sparta.java_personal_task_3.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +26,17 @@ public class CommentService {
     @Autowired
     ScheduleRepository scheduleRepository;
     @Autowired
-    CommentController commentController;
+    UserRepository userRepository;
 
+
+    public CommentResponseDto createComment(CommentRequestDto commentRequestDto, Long scheduleId) {
+        User user = userRepository.findById(commentRequestDto.getUserId()).orElseThrow(NullPointerException::new);
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(NullPointerException::new);
+        Comment comment = new Comment(commentRequestDto.getContents(),
+                user, schedule);
+        commentRepository.save(comment);
+        return new CommentResponseDto(comment);
+    }
 
     public ResponseEntity<String> updateComment(Long commentId, ScheduleRequestDto requestDto){
         Comment comment = commentRepository.findById(commentId).orElseThrow(NullPointerException::new);
